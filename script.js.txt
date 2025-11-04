@@ -1,0 +1,53 @@
+const questions = [
+    {
+        question: "Who is the main character in the movie 'Ratatouille'?",
+        options: ["Remy", "Linguini", "Colette", "Anton Ego"],
+        answer: "Remy"
+    },
+    {
+        question: "What is the name of the famous fast-food chain founded by Ronald McDonald?",
+        options: ["McDonald's", "Burger King", "KFC", "Taco Bell"],
+        answer: "McDonald's"
+    }
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+function displayQuestion() {
+    const questionElement = document.getElementById("question");
+    const optionsElement = document.getElementById("options");
+
+    questionElement.textContent = questions[currentQuestion].question;
+
+    optionsElement.innerHTML = "";
+    questions[currentQuestion].options.forEach(option => {
+        const button = document.createElement("button");
+        button.textContent = option;
+        button.onclick = checkAnswer;
+        optionsElement.appendChild(button);
+    });
+}
+
+function checkAnswer(event) {
+    const selectedAnswer = event.target.textContent;
+    if (selectedAnswer === questions[currentQuestion].answer) {
+        score++;
+    }
+    currentQuestion++;
+    if (currentQuestion >= questions.length) {
+        displayResult();
+    } else {
+        displayQuestion();
+    }
+}
+
+function displayResult() {
+    const resultElement = document.getElementById("result");
+    resultElement.textContent = You scored ${score} out of ${questions.length};
+    document.getElementById("question").style.display = "none";
+    document.getElementById("options").style.display = "none";
+    document.getElementById("submit").style.display = "none";
+}
+
+displayQuestion();
